@@ -18,7 +18,7 @@ Requirements that must be met are documented in LTS 103.
 For the full analysis notebook see: https://nbviewer.org/github/estevesjh/ComScratchStuff/blob/summit2023/starTracker/slewSettleTests/LVV-T2732_analysis_repeatability.ipynb
 
 Executive Summary
-================
+=============================================
 The TMA RA and DEC repeatability precision for a single target. 
 
 **Goal**: check the TMA sky error to repeat the same target multiple times.
@@ -35,13 +35,13 @@ To be robust against outliers I use $\sigma_{68}$ as std metric.
 - For some snakes movements the rms error was higher than $0.2$ arcsec (required precision).
 
 Sky Residual 
-================
+================================================
 The overall sky for 510 exposures is presented below.
 
 .. image:: /_static/jitter_histogram.png
 
 Elevation And Azimuth
-================
+================================================
 For each snake I show the dispersion on RA, DEC. 
 There is no clear trend with elevation or azimuth.
 However, there are some points higher than specified requirement.

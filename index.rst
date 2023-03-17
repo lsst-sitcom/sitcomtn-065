@@ -15,7 +15,7 @@ Checks the performance of the TMA under 3.5 degree random offsets tracking for 3
 In particular, we analyse the repeatability of a target.
 Requirements that must be met are documented in LTS 103.
 
-For the full analysis notebook see: https://nbviewer.org/github/estevesjh/ComScratchStuff/blob/summit2023/starTracker/slewSettleTests/LVV-T2732_analysis_jitter.ipynb
+For the full analysis notebook see: https://nbviewer.org/github/estevesjh/ComScratchStuff/blob/summit2023/starTracker/slewSettleTests/LVV-T2732_analysis_repeatability.ipynb
 
 Executive Summary
 ================

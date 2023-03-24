@@ -15,8 +15,8 @@ Checks the performance of the TMA under 3.5 degree random offsets tracking for 3
 In particular, we analyse the repeatability of a target.
 Requirements that must be met are documented in LTS 103.
 
-For the full analysis notebook see: 
-https://nbviewer.org/github/estevesjh/ComScratchStuff/blob/summit2023/starTracker/slewSettleTests/LVV-T2732_analysis_repeatability_report.ipynb?flush_cache=true
+For the full analysis notebook can be found here: 
+https://github.com/estevesjh/ComScratchStuff/tree/summit2023/starTracker/slewSettleTests
 
 Executive Summary
 =============================================
@@ -27,12 +27,11 @@ To be robust against outliers I use :math:`\sigma_{68}` as std metric.
 
 **Main findings:**
 
-- The overall on-sky precision is :math:`\sigma_{68}(RA)=0.19` arcsec and :math:`\sigma_{68}(DEC)=0.20` arcsec. 
-- The overall on-sky precision in local coordinates (Alt/Az) is :math:`\sigma_{68}(Az)=0.16` arcsec and :math:`\sigma_{68}(Alt)=0.24` arcsec. 
+- The overall on-sky precision is :math:`\sigma(RA)=0.26` arcsec and :math:`\sigma(DEC)=0.20` arcsec. 
 - There is no significant trend of the sky precision with elevation or azimuth.
 - The pointing model can have some impact of the precision. 
 
-3.5 Deg Offset Test
+3.5 Deg Offset Test Description
 ================================================
 For a given target (RA,DEC) acquire three images move 3.5 deg away (random) acquire three more images, then slew back to the initial target.
 Repeat the process five times. This exercise is called snake.
@@ -46,17 +45,18 @@ The above circle illustrates the snake for a given target.
 The snake exercise was repeated for a grid of Az/Alt.
 
 Data Description
-================================================
-The data analyzed here was taking in two different nights, 9th and 17th March.
-The sequences number of each night were 600-1115 and 292-858,respectively. 
-In total, we have 1051 exposures after discarding bad exposures.
+**************************************************
 
-The analysis was performed by joining both nights.
+The data analyzed here was taking in three different nights, 9th, 17th, and 22th March.
+The sequences number of each night were 600-1115, 292-858, and 569-1229,respectively. 
+In total, we have 1592 exposures after discarding bad exposures.
+
+The analysis was performed by joining all nights.
 Also, plots for each night were generated and the results were quite similar.
-To see analysis for a individual night see the nootebook.
+The analysis for a individual night are also shown in the accompanion nootebook.
 
 Residuals
-================================================
+************************************************************
 The residual for each slew is:
 
 .. math:: \delta RA = Ra - <Ra> 
@@ -81,7 +81,7 @@ Less than 0.5 percent of the data were outliers that we discarded.
 
    Fig. 3: Residual RADEC sky distribution of single targets
 
-The typical offset is :math:`\sigma_{68}(RA) = 19` arcsec and :math:`\sigma_{68}(DEC) = 20` arcsec. 
+The typical offset is :math:`\sigma(RA) = 26` arcsec and :math:`\sigma(DEC) = 20` arcsec. 
 
 
 .. Below, we show the residual distribution in Az/Alt. 
@@ -97,7 +97,7 @@ The typical offset is :math:`\sigma_{68}(RA) = 19` arcsec and :math:`\sigma_{68}
 .. Because of the TMA tracking 2/3 of the exposures had offsets higher than 30 arcsec. 
 
 Elevation And Azimuth Dependence
-================================================
+************************************************************
 For each snake I show the RA, DEC precision on a specified target.
 
 There is no clear trend with elevation or azimuth.
@@ -108,7 +108,7 @@ However, there are some points higher than specified requirement.
 
    Fig. 4: Sky precision RADEC as a function of elevation and azimuth. 
 
-We note that DEC precision is consitenly higher than RA. 
+We note that RA precision is consitenly higher than Dec. 
 
 .. .. figure:: /_static/jitter_azalt.png
 ..    :name: residual-alt-az
@@ -116,10 +116,47 @@ We note that DEC precision is consitenly higher than RA.
 ..    Fig. 4: Sky precision AzAlt as a function of elevation and azimuth. 
 
 Pointing Model
-================================================
+************************************************************
+The pointing model introduces a drift on the exposures.
+The drift is a linear relation with time.
 
-The pointing model can introduce an error on the residuals.
-The level of this effect depends on the tracking. 
+Below, we present the offset drift as a function of time offset since the baseline time.
+In this case, the baseline is the first exposure of the circle.
+
+.. figure:: /_static/offset_rate_2023-03-09.png
+   :name: offset-series-0
+
+.. figure:: /_static/offset_rate_2023-03-17.png
+   :name: offset-series-1
+
+.. figure:: /_static/offset_rate_2023-03-22.png
+   :name: offset-series
+
+   Fig. 4: Drift offset as a function of elapsed time. 
+
+The drift offset can be corrected by fiting a linear relation. 
+In addition, the offset rate is basically the slope.
+However, for some cases we can see an anomolous behaviour. 
+This outliers cases can be due to faults on the telescope components.
+
+Assuming the linearity, below we show the offset rate distribution for each circle. 
+
+.. figure:: /_static/offset_rate.png
+   :name: offset-slope
+
+   Fig. 5: Histogram of the offset rate.
+
+By correcting the drift offset, we can infer the actual TMA accuracy. 
+The residual after correction shows RMS errors compared to the non drift analysis. 
+
+.. figure:: /_static/corrected_offset_rate.png
+   :name: offset-series-corrected
+
+   Fig. 6: Offsets residuals.
+
+The typical RMS is :math:`\sigma(RA) = 30` arcsec and :math:`\sigma_{68}(DEC) = 21` arcsec. 
+Theses values are slighter higher, but not signficantly. 
+The fitted linear model also introduces an intrinsic error. 
 
 .. Add content here.
 .. See the `reStructuredText Style Guide <https://developer.lsst.io/restructuredtext/style.html>`__ to learn how to create sections, links, images, tables, equations, and more.

@@ -12,8 +12,10 @@
    **This technote is a work-in-progress.**
 
 Checks the performance of the TMA under 3.5 degree random offsets tracking for 32 seconds (and back to original position) in the full range of azimuth and elevation (another az-el grid). 
-In particular, we analyse the repeatability of a target.
-Requirements that must be met are documented in LTS 103.
+In particular, we analyse the accuracy after moving to a target.
+Requirements that must be met are documented in `LTS 103 <https://docushare.lsst.org/docushare/dsweb/Get/LTS-103>`_ - Section 2.1.6.
+The test case associated with this analysis is `SITCOM-707 <https://jira.lsstcorp.org/browse/SITCOM-707>`_
+
 
 For the full analysis notebook can be found here: 
 https://github.com/estevesjh/ComScratchStuff/tree/summit2023/starTracker/slewSettleTests
@@ -23,13 +25,19 @@ Executive Summary
 **Goal**: Study the TMA (RA, DEC) repeatability precision for a single target. 
 
 **Method**: The precision is the standard deviation of the sky residuals, (RA,DEC) - Target(RA,DEC). 
-To be robust against outliers I use :math:`\sigma_{68}` as std metric.
+To highlight the actual TMA accuracy I removed the outliers exposures. 
 
 **Main findings:**
 
-- The overall on-sky precision is :math:`\sigma(RA)=0.26` arcsec and :math:`\sigma(DEC)=0.20` arcsec. 
+- The overall on-sky precision is :math:`\sigma(RA)=0.26` arcsec and :math:`\sigma(DEC)=0.20` arcsec using three exposures of 5 sec.
+- The pointing model introduces an offset linear with time. The mean offset rate is of 0.5 arcsec/min.  
+- Correcting for the pointing model we found a similar on-sky precision :math:`\sigma(RA)=0.30` arcsec and :math:`\sigma(DEC)=0.21` arcsec.
 - There is no significant trend of the sky precision with elevation or azimuth.
-- The pointing model can have some impact of the precision. 
+- The 0.2 arcsec requirement is not met in both analysis.
+
+**Future Analysis:**
+- Look at the outliers behaviour.
+
 
 3.5 Deg Offset Test Description
 ================================================
@@ -47,7 +55,7 @@ The snake exercise was repeated for a grid of Az/Alt.
 Data Description
 **************************************************
 
-The data analyzed here was taking in three different nights, 9th, 17th, and 22th March.
+The data analyzed here was taking in three different nights, 9th, 17th, and 22nd March.
 The sequences number of each night were 600-1115, 292-858, and 569-1229,respectively. 
 In total, we have 1592 exposures after discarding bad exposures.
 
